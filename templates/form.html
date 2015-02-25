@@ -1,0 +1,73 @@
+{%extends "layout.html"%}
+
+{%block content%}
+
+
+<br><br><br>
+
+<h1> Data Import Dash </h1>
+
+<br>
+
+Sample for checkCategory = Data Checks
+
+
+<h2>Status maintenance:</h2> 
+<br>
+
+Check Pension funds are excluded from GL: 
+
+<select>
+  <option value="1">Good</option>
+  <option value="2">Not Critical</option>
+  <option value="3">Critical</option>
+  <option value="5">Pending Investigation</option>
+</select>
+
+Notes
+
+<input type="text" name="FirstName">
+
+<br>
+
+Unclassified Funds - Overall checking: 
+
+<select>
+  <option value="1">Good</option>
+  <option value="2">Not Critical</option>
+  <option value="3">Critical</option>
+  <option value="5">Pending Investigation</option>
+</select>
+
+Notes
+
+<input type="text" name="FirstName">
+
+<br>
+
+<br>
+
+<h2>GL data vs Association data:</h2>
+
+Compare Gl Data vs AMFI: 
+
+<select>
+  <option value="1">Good</option>
+  <option value="2">Not Critical</option>
+  <option value="3">Critical</option>
+  <option value="5">Pending Investigation</option>
+</select>
+
+Notes
+
+<input type="text" name="FirstName">
+
+
+
+<br>
+<br>
+
+
+<a href="/">Submit</a>
+
+{% endblock %}

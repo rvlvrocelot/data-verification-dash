@@ -1,0 +1,2 @@
+import dataVerificationDash
+dataVerificationDash.init_db()
