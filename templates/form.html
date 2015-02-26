@@ -5,69 +5,43 @@
 
 <br><br><br>
 
-<h1> Data Import Dash </h1>
+<h1> Data Verification Dash </h1>
 
 <br>
 
-Sample for checkCategory = Data Checks
+
+<form action="/report" method=post class=add-entry>
+
+{% for checkType in checkTypeDict %}
+  {% if checkTypeDict[checkType]["checks"] %}
+
+    <h2>{{checkTypeDict[checkType]["name"]}}</h2>
+    <br>
+
+    {% for check in checkTypeDict[checkType]["checks"] %}
+
+        <div class="row">
+          <div class="col-md-3">        
+            {{checkDict[check]['checkDescription']}}
+          </div>
+          <div class="col-md-2"> 
+            <select name = c{{check}}>
+              {% for status in statusDict %}
+                <option value={{status}}>{{statusDict[status]}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class = "col-md-7">
+            notes: <input type="text" name =n{{check}}>
+          </div>
+        </div>
+      <br>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+<input type="submit" value="Submit">
 
 
-<h2>Status maintenance:</h2> 
-<br>
-
-Check Pension funds are excluded from GL: 
-
-<select>
-  <option value="1">Good</option>
-  <option value="2">Not Critical</option>
-  <option value="3">Critical</option>
-  <option value="5">Pending Investigation</option>
-</select>
-
-Notes
-
-<input type="text" name="FirstName">
-
-<br>
-
-Unclassified Funds - Overall checking: 
-
-<select>
-  <option value="1">Good</option>
-  <option value="2">Not Critical</option>
-  <option value="3">Critical</option>
-  <option value="5">Pending Investigation</option>
-</select>
-
-Notes
-
-<input type="text" name="FirstName">
-
-<br>
-
-<br>
-
-<h2>GL data vs Association data:</h2>
-
-Compare Gl Data vs AMFI: 
-
-<select>
-  <option value="1">Good</option>
-  <option value="2">Not Critical</option>
-  <option value="3">Critical</option>
-  <option value="5">Pending Investigation</option>
-</select>
-
-Notes
-
-<input type="text" name="FirstName">
-
-
-
-<br>
-<br>
-
-
-<a href="/">Submit</a>
 
 {% endblock %}

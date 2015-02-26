@@ -6,6 +6,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 from flask_bootstrap import Bootstrap
 import hashlib
+import sqlHelper
 
 # configuration
 # the database is not in tmp on the deployed verson
@@ -45,18 +46,40 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
-#Load the homepage where the announcements are displayed
 @app.route('/')
 def home():
-    return render_template("home.html")
+    productList = sqlHelper.getProducts()
+    categoryList = sqlHelper.getCategory()
+    return render_template("home.html", productList = productList, categoryList=categoryList)
 
-@app.route('/generateform')
+@app.route('/generateform',  methods=['POST'])
 def generateform():
-    pass
+    researcher =  request.form['researcher']
+    product =  request.form['product']
+    category =  request.form['category']
+
+    checkDict = sqlHelper.getCheck(category)
+    checkTypeDict = sqlHelper.getCheckType()
+    statusDict = sqlHelper.getStatusDict()
+
+    keyList =  [int(key) for key in checkDict.keys()]
+    for checkType in checkTypeDict:
+        checkTypeDict[checkType]["checks"] = list( set(checkTypeDict[checkType]["checks"]) & set(keyList))
+    for checkType in checkTypeDict:
+        for index, checks in enumerate(checkTypeDict[checkType]["checks"]):
+            checkTypeDict[checkType]["checks"][index] = str(checks)
+        print checkTypeDict[checkType]["checks"]
+
+
+    return render_template("form.html", researcher=researcher, product=product,checkDict=checkDict,checkTypeDict =checkTypeDict, statusDict =statusDict )
 
 @app.route('/form')
 def form():
     return render_template("form.html")
+
+@app.route('/submitForm')
+def submitForm():
+    pass
 
 @app.route('/report')
 def report():

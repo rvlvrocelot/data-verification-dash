@@ -7,38 +7,58 @@
 
 <h1>Data Verification Dash</h1>
 
-Researcher:
-
-<select>
-  <option value="Bob">Bob</option>
-  <option value="Joe">Joe</option>
-  <option value="Steve">Steve</option>
-  <option value="Karen">Karen</option>
-</select>
-
-<br>
-
-Product:
-
-<select>
-  <option value="Desk">Simfund GL Desktop</option>
-  <option value="Pro">Simfund Dash Pro</option>
-  <option value="GL">Simfund Dash Global</option>
-</select>
-
-<br>
-
-Check Category:
-
-<select>
-  <option value="1">Desktop Functionality</option>
-  <option value="2">Simfund Dash Functionality</option>
-  <option value="3">Data Checks</option>
-</select>
-
 <br><br>
 
-<a href="/form">next</a>
+<form action="/generateform" method=post class=add-entry>
+
+<div class="row">
+  <div class="col-md-1">
+    Researcher:
+  </div>
+  <div class="col-md-11">
+    <select name="researcher">
+      <option value="Bob">Bob</option>
+      <option value="Joe">Joe</option>
+      <option value="Steve">Steve</option>
+      <option value="Karen">Karen</option>
+    </select>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-md-1">
+    Product:
+  </div>
+  <div class="col-md-11">    
+    <select name = "product">
+      {% for product in productList %}
+        <option value={{product}}>{{productList[product]}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-md-1">
+    Check Category:
+  </div>
+  <div class="col-md-11">
+    <select name="category">
+      {% for category in categoryList %}
+        <option value={{category}}>{{categoryList[category]}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+  <br><br>
+
+
+<input type="submit" value="Next">
+
+
 
 
 {% endblock %}
