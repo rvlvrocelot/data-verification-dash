@@ -10,7 +10,10 @@
 <br>
 
 
-<form action="/report" method=post class=add-entry>
+<form action="/submitForm" method=post class=add-entry>
+<input type="hidden" name="researcher" value="{{researcher}}">
+<input type="hidden" name="product" value="{{product}}">
+<input type="hidden" name="periodID" value="{{periodID}}">
 
 {% for checkType in checkTypeDict %}
   {% if checkTypeDict[checkType]["checks"] %}

@@ -50,13 +50,16 @@ def teardown_request(exception):
 def home():
     productList = sqlHelper.getProducts()
     categoryList = sqlHelper.getCategory()
-    return render_template("home.html", productList = productList, categoryList=categoryList)
+    periodIDList = sqlHelper.getPeriodID()
+    print periodIDList
+    return render_template("home.html", productList = productList, categoryList=categoryList, periodIDList=periodIDList)
 
 @app.route('/generateform',  methods=['POST'])
 def generateform():
     researcher =  request.form['researcher']
     product =  request.form['product']
     category =  request.form['category']
+    periodID = request.form['periodID']
 
     checkDict = sqlHelper.getCheck(category)
     checkTypeDict = sqlHelper.getCheckType()
@@ -71,15 +74,16 @@ def generateform():
         print checkTypeDict[checkType]["checks"]
 
 
-    return render_template("form.html", researcher=researcher, product=product,checkDict=checkDict,checkTypeDict =checkTypeDict, statusDict =statusDict )
+    return render_template("form.html", researcher=researcher, product=product,checkDict=checkDict,checkTypeDict =checkTypeDict, statusDict =statusDict, periodID=periodID )
 
 @app.route('/form')
 def form():
     return render_template("form.html")
 
-@app.route('/submitForm')
+@app.route('/submitForm', methods=['POST'])
 def submitForm():
-    pass
+    for key in request.form:
+        print key
 
 @app.route('/report')
 def report():

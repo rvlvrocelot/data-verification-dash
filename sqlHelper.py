@@ -28,6 +28,21 @@ def getCategory():
 		categoryList[row.checkCategoryId] = row.checkCategoryName
 	return categoryList	
 
+def getPeriodID():
+	cnxn = po.connect('DRIVER={SQL Server Native Client 10.0};SERVER=GLDB;DATABASE=siGlobalResearch;Trusted_Connection=yes')
+	cursor = cnxn.cursor()
+	periodIDList = []
+	cursor.execute('''
+
+				SELECT PeriodID periodID FROM siGlobalResearch.dbo.siPeriod 
+				WHERE PeriodID <= (SELECT PeriodId FROM siGlobalResearch.dbo.siPeriod WHERE CurrentPeriod = 1 )
+				ORDER BY PeriodId DESC
+		''')
+	result = cursor.fetchall()
+	for row in result:
+		periodIDList.append(row.periodID)
+	return periodIDList
+
 def getCheck(category):
 	checkDict = collections.OrderedDict()
 	cursor.execute("SELECT CheckID checkID, CheckTypeID checkTypeID, CheckDescription checkDescription FROM dbo.AllChecks WHERE CheckCategoryID = %d ORDER BY CheckTypeID "%int(category))
