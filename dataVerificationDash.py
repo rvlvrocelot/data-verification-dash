@@ -10,7 +10,7 @@ import sqlHelper
 
 # configuration
 # the database is not in tmp on the deployed verson
-DATABASE = 'C:\\Users\\amahan\\Desktop\\data-verification\\dataVerificationDash.db'
+DATABASE = 'C:\\Users\\hjiang\\My Documents\\Github\\data-verification-dash\\dataVerificationDash.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
@@ -48,9 +48,10 @@ def teardown_request(exception):
 
 @app.route('/')
 def home():
+    researcherList = sqlHelper.getResearchers()
     productList = sqlHelper.getProducts()
     categoryList = sqlHelper.getCategory()
-    return render_template("home.html", productList = productList, categoryList=categoryList)
+    return render_template("home.html", researcherList = researcherList, productList = productList, categoryList=categoryList)
 
 @app.route('/generateform',  methods=['POST'])
 def generateform():
@@ -86,5 +87,5 @@ def report():
     return render_template("report.html")
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
 

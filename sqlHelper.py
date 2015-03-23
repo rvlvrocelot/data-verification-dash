@@ -9,8 +9,16 @@ import time
 import collections
 
 
-cnxn = po.connect('DRIVER={SQL Server Native Client 10.0};SERVER=SIW0075;DATABASE=SimfundRelease;Trusted_Connection=yes')
+cnxn = po.connect('DRIVER={SQL Server Native Client 11.0};SERVER=SIW0085\SIMFUNDWEB;DATABASE=SimfundRelease;Trusted_Connection=yes')
 cursor = cnxn.cursor()
+
+def getResearchers():
+    researcherList = {}
+    cursor.execute("SELECT UserID userId, Name name FROM dbo.VerificationStaff")
+    result = cursor.fetchall()
+    for row in result:
+        researcherList[row.userId] = row.name
+    return researcherList
 
 def getProducts():
 	productList = {}
