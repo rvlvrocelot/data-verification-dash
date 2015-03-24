@@ -80,6 +80,7 @@ def form():
 
 @app.route('/submitForm')
 def submitForm():
+    #return render_template("test.html")
     pass
 
 @app.route('/report')
@@ -87,5 +88,5 @@ def report():
     return render_template("report.html")
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host = '0.0.0.0')
 

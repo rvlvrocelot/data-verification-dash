@@ -14,7 +14,7 @@ cursor = cnxn.cursor()
 
 def getResearchers():
     researcherList = {}
-    cursor.execute("SELECT UserID userId, Name name FROM dbo.VerificationStaff")
+    cursor.execute("SELECT SUSER_ID() userId,SUSER_NAME() name")
     result = cursor.fetchall()
     for row in result:
         researcherList[row.userId] = row.name
