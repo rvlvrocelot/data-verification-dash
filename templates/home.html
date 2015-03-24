@@ -17,10 +17,9 @@
   </div>
   <div class="col-md-11">
     <select name="researcher">
-      <option value="Bob">Bob</option>
-      <option value="Joe">Joe</option>
-      <option value="Steve">Steve</option>
-      <option value="Karen">Karen</option>
+      {% for researcher in researcherList %}
+        <option value={{researcher}}>{{researcherList[researcher]}}</option>
+      {% endfor %}
     </select>
   </div>
 </div>
