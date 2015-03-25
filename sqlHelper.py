@@ -8,8 +8,11 @@ import calendar
 import time
 import collections
 
+f = open("C:/Users/amahan/Documents/GitHub/connectionString.txt","r")
+connectionString = f.read()
+f.close()
 
-cnxn = po.connect('DRIVER={SQL Server Native Client 11.0};SERVER=SIW0085\SIMFUNDWEB;DATABASE=SimfundRelease;Trusted_Connection=yes')
+cnxn = po.connect(connectionString)
 cursor = cnxn.cursor()
 
 def getResearchers():

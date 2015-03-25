@@ -10,7 +10,7 @@ import sqlHelper
 
 # configuration
 # the database is not in tmp on the deployed verson
-DATABASE = 'C:\\Users\\hjiang\\My Documents\\Github\\data-verification-dash\\dataVerificationDash.db'
+DATABASE = 'C:\\Users\\amahan\\My Documents\\GitHub\\data-verification-dash\\dataVerificationDash.db'
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
