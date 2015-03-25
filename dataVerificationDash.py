@@ -7,6 +7,7 @@ from contextlib import closing
 from flask_bootstrap import Bootstrap
 import hashlib
 import sqlHelper
+import datetime
 
 # configuration
 # the database is not in tmp on the deployed verson
@@ -57,7 +58,8 @@ def home():
 
 @app.route('/generateform',  methods=['POST'])
 def generateform():
-    researcher =  request.form['researcher']
+    #researcher =  request.form['researcher']
+    researcher = "Andrew"
     product =  request.form['product']
     category =  request.form['category']
     periodID = request.form['periodID']
@@ -72,10 +74,10 @@ def generateform():
     for checkType in checkTypeDict:
         for index, checks in enumerate(checkTypeDict[checkType]["checks"]):
             checkTypeDict[checkType]["checks"][index] = str(checks)
-        print checkTypeDict[checkType]["checks"]
+  #      print checkTypeDict[checkType]["checks"]
 
-
-    return render_template("form.html", researcher=researcher, product=product,checkDict=checkDict,checkTypeDict =checkTypeDict, statusDict =statusDict, periodID=periodID )
+  #  print researcher,product,checkDict,checkTypeDict, statusDict, periodID
+    return render_template("form.html", researcher=researcher, product=product,checkDict=checkDict,checkTypeDict =checkTypeDict, statusDict =statusDict, periodID=periodID, category=category )
 
 @app.route('/form')
 def form():
@@ -83,8 +85,18 @@ def form():
 
 @app.route('/submitForm', methods=['POST'])
 def submitForm():
+    submitList = []
     for key in request.form:
-        print key
+        if key[0] == 'n':
+            number = key[1:]
+            dataSource =  sqlHelper.getDataSource(number)
+            checkTypeID = sqlHelper.getCheckTypeID(number)
+            time = datetime.datetime.now()
+
+            sqlHelper.submitData(number, time, request.form['researcher'], request.form['periodID'], dataSource, request.form['category'], checkTypeID, request.form['product'], request.form['c'+str(number)], request.form[key] )
+            print number, request.form[key], request.form['c'+str(number)], request.form['periodID'], request.form['researcher'],request.form['product'], request.form['category'], dataSource, checkTypeID
+
+
     #return render_template("test.html")
     pass
 

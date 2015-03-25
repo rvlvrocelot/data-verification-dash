@@ -81,4 +81,31 @@ def getStatusDict():
 		statusDict[row.statusID] = row.statusName
 	return statusDict
 
+def getCheckTypeID(number):
+	cursor.execute("SELECT CheckTypeID checkTypeID FROM AllChecks WHERE checkID = {value}".format(value = number))
+	result = cursor.fetchall()
+	for row in result:
+		return row.checkTypeID
 
+def getDataSource(number):
+	cursor.execute("SELECT DataSourceID dataSourceID FROM AllChecks WHERE checkID = {value}".format(value = number))
+	result = cursor.fetchall()
+	for row in result:
+		return row.dataSourceID
+
+def submitData(id, date, researcher, periodID, dataSource, checkCategoryID, checkTypeID, product, checkStatus, notes ):
+
+	date = date.strftime("%Y-%m-%d %H:%M:%S")
+
+	print '''
+
+			INSERT INTO ReleaseChecks (Researcher, DateChecked, ReleasePeriodID, CheckCategoryID, CheckTypeID, CheckID, CheckProductID, DataSourceID, StatusID, Notes  )
+			VALUES ('{researcher}','{date}','{periodID}','{checkCategoryID}','{checkTypeID}','{id}','{product}','{dataSource}', '{checkStatus}','{notes}')
+		'''.format(researcher=researcher,date=date,periodID=periodID,checkCategoryID=checkCategoryID,checkTypeID=checkTypeID,id=id,product=product,dataSource=dataSource,checkStatus=checkStatus,notes=notes)
+
+	cursor.execute('''
+
+			INSERT INTO ReleaseChecks (Researcher, DateChecked, ReleasePeriodID, CheckCategoryID, CheckTypeID, CheckID, CheckProductID, DataSourceID, StatusID, Notes  )
+			VALUES ('{researcher}','{date}','{periodID}','{checkCategoryID}','{checkTypeID}','{id}','{product}','{dataSource}', '{checkStatus}','{notes}')
+		'''.format(researcher=researcher,date=date,periodID=periodID,checkCategoryID=checkCategoryID,checkTypeID=checkTypeID,id=id,product=product,dataSource=dataSource,checkStatus=checkStatus,notes=notes))
+	cursor.commit()
