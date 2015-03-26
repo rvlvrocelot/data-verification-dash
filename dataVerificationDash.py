@@ -92,11 +92,10 @@ def submitForm():
             dataSource =  sqlHelper.getDataSource(number)
             checkTypeID = sqlHelper.getCheckTypeID(number)
             time = datetime.datetime.now()
-
-            sqlHelper.submitData(number, time, request.form['researcher'], request.form['periodID'], dataSource, request.form['category'], checkTypeID, request.form['product'], request.form['c'+str(number)], request.form[key] )
-            print number, request.form[key], request.form['c'+str(number)], request.form['periodID'], request.form['researcher'],request.form['product'], request.form['category'], dataSource, checkTypeID
-
-
+            notes = str(request.form[key])
+            notes = notes.replace("'","''")
+            sqlHelper.submitData(number, time, request.form['researcher'], request.form['periodID'], dataSource, request.form['category'], checkTypeID, request.form['product'], request.form['c'+str(number)], notes )
+           
     #return render_template("test.html")
     pass
 
