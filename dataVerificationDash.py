@@ -96,12 +96,13 @@ def submitForm():
             notes = notes.replace("'","''")
             sqlHelper.submitData(number, time, request.form['researcher'], request.form['periodID'], dataSource, request.form['category'], checkTypeID, request.form['product'], request.form['c'+str(number)], notes )
            
-    #return render_template("test.html")
-    pass
+    return redirect("report/" +request.form['periodID'] )
 
-@app.route('/report')
-def report():
-    return render_template("report.html")
+
+@app.route('/report/<periodID>')
+def report(periodID):
+    data = sqlHelper.getReportData(periodID)
+    return render_template("report.html",data=data)
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0')

@@ -97,15 +97,26 @@ def submitData(id, date, researcher, periodID, dataSource, checkCategoryID, chec
 
 	date = date.strftime("%Y-%m-%d %H:%M:%S")
 
-	print '''
-
-			INSERT INTO ReleaseChecks (Researcher, DateChecked, ReleasePeriodID, CheckCategoryID, CheckTypeID, CheckID, CheckProductID, DataSourceID, StatusID, Notes  )
-			VALUES ('{researcher}','{date}','{periodID}','{checkCategoryID}','{checkTypeID}','{id}','{product}','{dataSource}', '{checkStatus}','{notes}')
-		'''.format(researcher=researcher,date=date,periodID=periodID,checkCategoryID=checkCategoryID,checkTypeID=checkTypeID,id=id,product=product,dataSource=dataSource,checkStatus=checkStatus,notes=notes)
-
 	cursor.execute('''
 
 			INSERT INTO ReleaseChecks (Researcher, DateChecked, ReleasePeriodID, CheckCategoryID, CheckTypeID, CheckID, CheckProductID, DataSourceID, StatusID, Notes  )
 			VALUES ('{researcher}','{date}','{periodID}','{checkCategoryID}','{checkTypeID}','{id}','{product}','{dataSource}', '{checkStatus}','{notes}')
 		'''.format(researcher=researcher,date=date,periodID=periodID,checkCategoryID=checkCategoryID,checkTypeID=checkTypeID,id=id,product=product,dataSource=dataSource,checkStatus=checkStatus,notes=notes))
 	cursor.commit()
+
+def getReportData(periodID):
+	cursor.execute('''
+
+			SELECT Researcher researcher, ReleasePeriodID releasePeriodID, cc.CheckCategoryName checkCategoryName, cp.ProductDescription productDescription, ds.DataSourceName dataSourceName, cs.StatusName statusName, Notes notes, ac.CheckName checkName, DateChecked dateChecked  
+			FROM ReleaseChecks rc
+			JOIN CheckCategory cc on rc.CheckCategoryID = cc.CheckCategoryID
+			JOIN CheckProduct cp on rc.CheckProductID = cp.ProductId 
+			JOIN DataSource ds on rc.DataSourceID = ds.DataSourceID
+			JOIN CheckStatus cs on rc.StatusID = cs.StatusID
+			JOIN AllChecks ac on rc.CheckID = ac.CheckID 
+			WHERE ReleasePeriodID = {periodID}
+			ORDER BY rc.StatusID DESC
+
+		'''.format(periodID = periodID))
+	result = cursor.fetchall()
+	return result

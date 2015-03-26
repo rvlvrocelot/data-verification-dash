@@ -5,6 +5,36 @@
 
 <br><br><br>
 
-<h1> hello!!!! </h1>
+<h1> Report </h1>
+
+<table class ="table" style="width:80%">
+	<tr>
+		<th>Check Name</th>
+		<th>Status</th>
+		<th>Researcher</th>
+		<th>Period ID</th>
+		<th>Date Checked</th>
+		<th>Check Category</th>
+		<th>Product</th>
+		<th>Data Source</th>
+		<th>Notes</th>
+
+	</tr>
+{% for result in data%}
+	<tr>
+		<td>{{result.checkName}}</td>
+		<td>{{result.statusName}}</td>
+		<td>{{result.researcher}}</td>
+		<td>{{result.releasePeriodID}}</td>
+		<td>{{result.dateChecked}}</td>
+		<td>{{result.checkCategoryName}}</td>
+		<td>{{result.productDescription}}</td>
+		<td>{{result.dataSourceName}}</td>
+		<td>{{result.notes}}</td>
+	</tr>
+
+{% endfor %}
+
+</table>
 
 {% endblock %}
