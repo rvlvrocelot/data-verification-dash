@@ -19,7 +19,17 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="/report">Report</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Report<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                    <li><a href="/report/{{g.periodID[0]}}">{{g.periodID[0]}}</a></li>
+                    <li><a href="/report/{{g.periodID[1]}}">{{g.periodID[1]}}</a></li>
+                    <li><a href="/report/{{g.periodID[2]}}">{{g.periodID[2]}}</a></li>
+                    <li><a href="/report/{{g.periodID[3]}}">{{g.periodID[3]}}</a></li>
+                    <li><a href="/report/{{g.periodID[4]}}">{{g.periodID[4]}}</a></li>
+                    <li><a href="/report/{{g.periodID[5]}}">{{g.periodID[5]}}</a></li>
+              </ul>
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

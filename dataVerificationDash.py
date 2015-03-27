@@ -49,6 +49,7 @@ def teardown_request(exception):
 
 @app.route('/')
 def home():
+    g.periodID = sqlHelper.getPeriodID()
     researcherList = sqlHelper.getResearchers()
     productList = sqlHelper.getProducts()
     categoryList = sqlHelper.getCategory()
@@ -58,6 +59,7 @@ def home():
 
 @app.route('/generateform',  methods=['POST'])
 def generateform():
+    g.periodID = sqlHelper.getPeriodID()
     #researcher =  request.form['researcher']
     researcher = "Andrew"
     product =  request.form['product']
@@ -74,17 +76,16 @@ def generateform():
     for checkType in checkTypeDict:
         for index, checks in enumerate(checkTypeDict[checkType]["checks"]):
             checkTypeDict[checkType]["checks"][index] = str(checks)
-  #      print checkTypeDict[checkType]["checks"]
-
-  #  print researcher,product,checkDict,checkTypeDict, statusDict, periodID
     return render_template("form.html", researcher=researcher, product=product,checkDict=checkDict,checkTypeDict =checkTypeDict, statusDict =statusDict, periodID=periodID, category=category )
 
 @app.route('/form')
 def form():
+    g.periodID = sqlHelper.getPeriodID()
     return render_template("form.html")
 
 @app.route('/submitForm', methods=['POST'])
 def submitForm():
+    g.periodID = sqlHelper.getPeriodID()
     submitList = []
     for key in request.form:
         if key[0] == 'n':
@@ -101,8 +102,9 @@ def submitForm():
 
 @app.route('/report/<periodID>')
 def report(periodID):
+    g.periodID = sqlHelper.getPeriodID()
     data = sqlHelper.getReportData(periodID)
-    return render_template("report.html",data=data)
+    return render_template("report.html",data=data, periodID=periodID)
 
 if __name__ == '__main__':
     app.run(host = '0.0.0.0')
